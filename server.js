@@ -8,22 +8,22 @@ import { swaggerUi, swaggerSpec } from "./config/swagger.js";
 dotenv.config();
 const app = express();
 
-
+// Middlewares
 app.use(cors());
 app.use(express.json());
 
-
+// Swagger documentation
 app.use("/api-docs", swaggerUi.serve, swaggerUi.setup(swaggerSpec));
 
-
+// Conexión a MongoDB
 mongoose.connect(process.env.MONGODB_URI)
   .then(() => console.log("MongoAtlas conectado"))
   .catch((err) => {
     console.error("Error conectando a MongoDB:", err);
-    process.exit(1); 
+    process.exit(1);
   });
 
-
+// Ruta raíz para health checks
 app.get("/", (req, res) => {
   res.json({ 
     message: "Backend de Caballeros del Zodiaco funcionando",
@@ -32,23 +32,8 @@ app.get("/", (req, res) => {
   });
 });
 
-
+// Rutas de la API
 app.use("/api/caballeros", caballeros);
-
-
-app.use("/*", (req, res) => {
-  res.status(404).json({ error: "Ruta no encontrada" });
-});
-
-
-app.use((error, req, res, next) => {
-  console.error("Error del servidor:", error);
-  res.status(500).json({ 
-    error: "Error interno del servidor",
-
-    ...(process.env.NODE_ENV === 'development' && { details: error.message })
-  });
-});
 
 const PORT = process.env.PORT || 4000;
 

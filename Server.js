@@ -12,7 +12,7 @@ app.use(express.json());
 app.use("/api-docs", swaggerUi.serve, swaggerUi.setup(swaggerSpec));
 mongoose
   .connect(process.env.MONGODB_URI)
-  .then(() => console.log("MongoDB conectado"))
+  .then(() => console.log("MongoAtlas conectado"))
   .catch((err) => console.error(err));
 
 app.use("/api/caballeros", caballeros);

@@ -11,7 +11,7 @@ const options = {
     },
     servers: [
       {
-        url: "caballeros-production.up.railway.app",
+        url: "https://caballeros-production.up.railway.app",
         description: "Servidor local",
       },
     ],
